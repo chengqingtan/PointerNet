@@ -19,22 +19,24 @@ from tqdm import tqdm
 from PointerNet import PointerNet
 from Data_Generator import TSPDataset
 
+import os
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Pytorch implementation of Pointer-Net")
 
     # Data
-    parser.add_argument('--train_size', default=10000, type=int, help='Training data size')
-    parser.add_argument('--val_size', default=100, type=int, help='Validation data size')
-    parser.add_argument('--test_size', default=100, type=int, help='Test data size')
+    parser.add_argument('--train_size', default=100000, type=int, help='Training data size')
+    parser.add_argument('--val_size', default=1000, type=int, help='Validation data size')
+    parser.add_argument('--test_size', default=1000, type=int, help='Test data size')
     parser.add_argument('--batch_size', default=256, type=int, help='Batch size')
     # Train
     parser.add_argument('--nof_epoch', default=50, type=int, help='Number of epochs')
-    parser.add_argument('--lr', type=float, default=0.001, help='Learning rate')
+    parser.add_argument('--lr', type=float, default=0.0005, help='Learning rate')
     # GPU
     parser.add_argument('--gpu', default=True, action='store_true', help='Enable gpu')
     # TSP
-    parser.add_argument('--nof_points', type=int, default=20, help='Number of points in TSP')
+    parser.add_argument('--nof_points', type=int, default=5, help='Number of points in TSP')
     # Network
     parser.add_argument('--embedding_size', type=int, default=128, help='Embedding size')
     parser.add_argument('--hiddens', type=int, default=512, help='Number of hidden units')
@@ -110,5 +112,7 @@ if __name__ == "__main__":
 
     # Save the trained model
     model_path = f"./saved/pointer_net_model_{params.nof_points}.pt"
+    # Ensure the directory exists
+    os.makedirs(os.path.dirname(model_path), exist_ok=True)
     torch.save(model.state_dict(), model_path)
     print(f"Model saved to {model_path}")

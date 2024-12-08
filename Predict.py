@@ -50,7 +50,7 @@ def predict_and_visualize(model_path, embedding_size, hiddens, nof_lstms, dropou
 
 if __name__ == "__main__":
     predict_and_visualize(
-        model_path="./saved/pointer_net_model.pt",
+        model_path="./saved/pointer_net_model_5.pt",
         embedding_size=128,
         hiddens=512,
         nof_lstms=2,
