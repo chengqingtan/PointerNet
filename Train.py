@@ -80,8 +80,7 @@ if __name__ == "__main__":
 
     for epoch in range(params.nof_epoch):
         batch_loss = []
-        iterator = tqdm(dataloader, unit='Batch')
-
+        iterator = tqdm(dataloader, unit='Batch', desc='Epoch %i/%i' % (epoch + 1, params.nof_epoch))
         for i_batch, sample_batched in enumerate(iterator):
 
             train_batch = Variable(sample_batched['Points'])
@@ -106,7 +105,7 @@ if __name__ == "__main__":
             model_optim.step()
 
         # Log average loss for the epoch
-        print(f"Epoch {epoch + 1}/{params.nof_epoch} - Loss: {np.average(batch_loss):.4f}")
+        iterator.set_postfix(loss=np.average(batch_loss))
 
     # Save the trained model
     model_path = f"./saved/pointer_net_model_{params.nof_points}.pt"
